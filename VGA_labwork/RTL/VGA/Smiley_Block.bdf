@@ -166,9 +166,9 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 80 528 248 544)
+	(rect 80 512 248 528)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "toggleX" (rect 5 0 42 17)(font "Intel Clear" ))
+	(text "RightMove" (rect 5 0 57 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -182,9 +182,9 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 80 512 248 528)
+	(rect 80 528 248 544)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "Y_direction" (rect 5 0 59 17)(font "Intel Clear" ))
+	(text "LeftMove" (rect 5 0 52 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -414,15 +414,15 @@ agreement for further details.
 	(port
 		(pt 0 80)
 		(input)
-		(text "Y_direction" (rect 0 0 55 12)(font "Arial" ))
-		(text "Y_direction" (rect 21 75 76 87)(font "Arial" ))
+		(text "RightMove" (rect 0 0 53 12)(font "Arial" ))
+		(text "RightMove" (rect 21 75 74 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80))
 	)
 	(port
 		(pt 0 96)
 		(input)
-		(text "toggleX" (rect 0 0 35 12)(font "Arial" ))
-		(text "toggleX" (rect 21 91 56 103)(font "Arial" ))
+		(text "LeftMove" (rect 0 0 47 12)(font "Arial" ))
+		(text "LeftMove" (rect 21 91 68 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96))
 	)
 	(port
@@ -453,35 +453,9 @@ agreement for further details.
 		(text "topLeftY[10..0]" (rect 148 43 223 55)(font "Arial" ))
 		(line (pt 232 48)(pt 216 48)(line_width 3))
 	)
-	(parameter
-		"INITIAL_X"
-		"initial_x"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"INITIAL_Y"
-		"initial_y"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"INITIAL_X_SPEED"
-		"initial_x_speed"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"INITIAL_Y_SPEED"
-		"initial_y_speed"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"MAX_Y_SPEED"
-		"220"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
 		(rectangle (rect 16 16 216 160))
 	)
-	(annotation_block (parameter)(rect 584 272 841 386))
 )
 (connector
 	(text "clk" (rect 880 392 894 409)(font "Intel Clear" ))
@@ -581,19 +555,9 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "toggleX" (rect 369 520 406 537)(font "Intel Clear" ))
-	(pt 248 536)
-	(pt 584 536)
-)
-(connector
 	(pt 1544 408)
 	(pt 1576 408)
 	(bus)
-)
-(connector
-	(text "Y_direction" (rect 373 504 426 521)(font "Intel Clear" ))
-	(pt 584 520)
-	(pt 248 520)
 )
 (connector
 	(pt 560 568)
@@ -622,5 +586,15 @@ agreement for further details.
 	(pt 328 360)
 	(pt 424 360)
 	(bus)
+)
+(connector
+	(text "RightMove" (rect 354 504 405 521)(font "Intel Clear" ))
+	(pt 248 520)
+	(pt 584 520)
+)
+(connector
+	(text "LeftMove" (rect 362 520 408 537)(font "Intel Clear" ))
+	(pt 248 536)
+	(pt 584 536)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2021" (rect 168 24 527 43)(font "Intel Clear" (font_size 8)))
