@@ -21,7 +21,7 @@ agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 224 112)
+	(rect 16 16 256 112)
 	(text "game_controls" (rect 5 0 91 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 75 24 92)(font "Intel Clear" ))
 	(port
@@ -39,20 +39,34 @@ agreement for further details.
 		(line (pt 0 48)(pt 16 48))
 	)
 	(port
-		(pt 208 32)
-		(output)
-		(text "RightMove" (rect 0 0 62 19)(font "Intel Clear" (font_size 8)))
-		(text "RightMove" (rect 125 27 187 46)(font "Intel Clear" (font_size 8)))
-		(line (pt 208 32)(pt 192 32))
+		(pt 0 64)
+		(input)
+		(text "one_risingEdgePulse" (rect 0 0 121 19)(font "Intel Clear" (font_size 8)))
+		(text "one_risingEdgePulse" (rect 21 59 142 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 64)(pt 16 64))
 	)
 	(port
-		(pt 208 48)
+		(pt 240 32)
+		(output)
+		(text "RightMove" (rect 0 0 62 19)(font "Intel Clear" (font_size 8)))
+		(text "RightMove" (rect 157 27 219 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 240 32)(pt 224 32))
+	)
+	(port
+		(pt 240 48)
 		(output)
 		(text "LeftMove" (rect 0 0 55 19)(font "Intel Clear" (font_size 8)))
-		(text "LeftMove" (rect 132 43 187 62)(font "Intel Clear" (font_size 8)))
-		(line (pt 208 48)(pt 192 48))
+		(text "LeftMove" (rect 164 43 219 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 240 48)(pt 224 48))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "Player1Fire" (rect 0 0 68 19)(font "Intel Clear" (font_size 8)))
+		(text "Player1Fire" (rect 151 59 219 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 240 64)(pt 224 64))
 	)
 	(drawing
-		(rectangle (rect 16 16 192 80))
+		(rectangle (rect 16 16 224 80))
 	)
 )

@@ -94,28 +94,21 @@ agreement for further details.
 		(text "smileyRGB[7..0]" (rect 116 43 211 62)(font "Intel Clear" (font_size 8)))
 		(line (pt 232 48)(pt 216 48)(line_width 3))
 	)
-	(parameter
-		"initial_x"
-		"280"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"initial_y"
-		"185"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"initial_x_speed"
-		"60"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"initial_y_speed"
-		"20"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
+	(port
+		(pt 232 64)
+		(output)
+		(text "PlayerTLX[10..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "PlayerTLX[10..0]" (rect 111 59 211 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 232 64)(pt 216 64)(line_width 3))
+	)
+	(port
+		(pt 232 80)
+		(output)
+		(text "PlayerTLY[10..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "PlayerTLY[10..0]" (rect 111 75 211 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 232 80)(pt 216 80)(line_width 3))
+	)
 	(drawing
 		(rectangle (rect 16 16 216 176))
 	)
-	(annotation_block (parameter)(rect 248 -64 348 16))
 )

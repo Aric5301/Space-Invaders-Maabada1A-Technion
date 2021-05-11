@@ -572,8 +572,8 @@ begin
 	else begin
 		drawingRequest <=	1'b0;
 	
-		if (InsideRectangle == 1'b1 )
-			drawingRequest <= (number_bitmap[digit][offsetY][offsetX]);	//get value from bitmap  
+		//if (InsideRectangle == 1'b1 )
+			// drawingRequest <= (number_bitmap[digit][offsetY][offsetX]);	//get value from bitmap  
 	end 
 end
 

@@ -24,7 +24,7 @@ agreement for further details.
 	(input)
 	(rect 224 184 400 200)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "dot_isPressed" (rect 5 0 75 12)(font "Arial" ))
+	(text "dot_isPressed" (rect 5 0 74 12)(font "Arial" ))
 	(pt 176 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
@@ -40,7 +40,7 @@ agreement for further details.
 	(input)
 	(rect 224 224 400 240)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "zero_isPressed" (rect 5 0 76 17)(font "Intel Clear" ))
+	(text "zero_isPressed" (rect 5 0 75 17)(font "Intel Clear" ))
 	(pt 176 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
@@ -51,6 +51,22 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 200 264 400 280)
+	(text "INPUT" (rect 157 0 185 10)(font "Arial" (font_size 6)))
+	(text "one_risingEdgePulse" (rect 5 0 107 12)(font "Arial" ))
+	(pt 200 8)
+	(drawing
+		(line (pt 116 12)(pt 141 12))
+		(line (pt 116 4)(pt 141 4))
+		(line (pt 145 8)(pt 200 8))
+		(line (pt 116 12)(pt 116 4))
+		(line (pt 141 4)(pt 145 8))
+		(line (pt 141 12)(pt 145 8))
+	)
+	(text "VCC" (rect 160 7 180 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -84,6 +100,22 @@ agreement for further details.
 		(line (pt 78 12)(pt 82 8))
 	)
 )
+(pin
+	(output)
+	(rect 864 264 1040 280)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "Player1Fire" (rect 90 0 146 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
 (connector
 	(pt 400 232)
 	(pt 864 232)
@@ -91,4 +123,8 @@ agreement for further details.
 (connector
 	(pt 400 192)
 	(pt 864 192)
+)
+(connector
+	(pt 400 272)
+	(pt 864 272)
 )
