@@ -15,12 +15,14 @@ module	singleRocketController	(
 					input	logic signed [8:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 					input logic signed [10:0] initialX,     // initial X coordinate of the rocket
 					input logic signed [10:0] initialY,     // initial Y coordinate of the rocket
-					input logic collision,                  // collision if rocket hits an object
 
-					output	 logic signed 	[10:0]	topLeftX, // output the top left corner 
-					output	 logic signed	[10:0]	topLeftY  // can be negative , if the object is partliy outside 
-					
+					output logic signed [10:0]	topLeftX, // output the top left corner 
+					output logic signed [10:0]	topLeftY,  // can be negative , if the object is partliy outside 
+					output logic reachedBorder 
 );
+
+logic isActive_d;
+logic isActiveRisingEdgePulse;
 
 const int	FIXED_POINT_MULTIPLIER	=	64;
 // FIXED_POINT_MULTIPLIER is used to enable working with integers in high resolution so that 
@@ -35,7 +37,6 @@ int speed;
 int initialX_Inside;     // initial X coordinate of the rocket
 int initialY_Inside;     // initial Y coordinate of the rocket
 
-logic isActive_d;
 
 
 //////////--------------------------------------------------------------------------------------------------------------
@@ -49,15 +50,18 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
 		isActive_d <= 1'b0;
+		speed <= 0;
 	end
 	
-	if (isActiveRisingEdgePulse == 1'b1) begin
-		topLeftX_FixedPoint <= initialX_Inside * FIXED_POINT_MULTIPLIER;
-		topLeftY_FixedPoint <= initialY_Inside * FIXED_POINT_MULTIPLIER;
+	else if (isActiveRisingEdgePulse == 1'b1) begin
 		speed <= initialSpeed;
+		isActive_d <= isActive;
 	end
 	
-	isActive_d <= isActive;
+	else begin
+		isActive_d <= isActive;
+	end
+	
 end 
 
 
@@ -65,12 +69,16 @@ end
 always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
-		topLeftY_FixedPoint	<= 0 * FIXED_POINT_MULTIPLIER;
+		topLeftY_FixedPoint	<= 0;
 	end
 	
-	if (startOfFrame == 1'b1 && isActive == 1'b1) begin
-		topLeftY_FixedPoint <= topLeftY_FixedPoint + speed;
+	else if (isActiveRisingEdgePulse == 1'b1) begin
+		topLeftY_FixedPoint <= initialY_Inside * FIXED_POINT_MULTIPLIER;
 	end
+	
+	else if (startOfFrame == 1'b1 && isActive == 1'b1) begin
+		topLeftY_FixedPoint <= topLeftY_FixedPoint + speed;
+	end	
 end 
 
 //////////--------------------------------------------------------------------------------------------------------------=
@@ -79,13 +87,17 @@ end
 always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
-		topLeftX_FixedPoint	<= 0 * FIXED_POINT_MULTIPLIER;
+		topLeftX_FixedPoint	<= 0;
+	end	
+	
+	else if (isActiveRisingEdgePulse == 1'b1) begin
+		topLeftX_FixedPoint <= initialX_Inside * FIXED_POINT_MULTIPLIER;
 	end
 end
 
 //get a better (64 times) resolution using integer   
 assign 	topLeftX = topLeftX_FixedPoint / FIXED_POINT_MULTIPLIER ;   // note it must be 2^n 
 assign 	topLeftY = topLeftY_FixedPoint / FIXED_POINT_MULTIPLIER ;    
-
+assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0);
 
 endmodule

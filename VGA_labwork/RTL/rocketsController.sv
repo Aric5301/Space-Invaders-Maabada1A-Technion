@@ -12,12 +12,13 @@ module	rocketsController	(
 					input	logic	resetN,
 					input logic player1Fire,                 // short pulse every time the player fires
 					input	logic	startOfFrame,                // short pulse every start of frame 30Hz 
-					input logic collision,                   // collision if rocket hits an object
+					input logic alienHit,                   // collision if rocket hits an object
+					input logic reachedBorder,
 					input logic signed 	[10:0] PlayerTLX,   // input the the current TLX of Player
 					input logic signed	[10:0] PlayerTLY,   // input the the current TLY of Player
 					output logic signed [8:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
-					output logic signed initialX [10:0],     // initial X coordinate of the rocket
-					output logic signed initialY [10:0],     // initial Y coordinate of the rocket
+					output logic signed [10:0] initialX,     // initial X coordinate of the rocket
+					output logic signed [10:0] initialY,     // initial Y coordinate of the rocket
 					output logic [0:0] isActivePlayers, 	  // output bus of isActive flags for all singleRocketControllers of players
 					output logic [0:0] isActiveAliens 		  // output bus of isActive flags for all singleRocketControllers of aliens
 					
@@ -40,11 +41,18 @@ always_ff@(posedge clk or negedge resetN) begin
 		aliensRockets <= 1'b0;
 	end
 	
-	if (player1Fire == 1'b1) begin
-		initialSpeed <= PLAYER_FIRE_SPEED;
-		initialX <= PlayerTLX;
-		initialY <=  PlayerTLY;
-		isActivePlayers <= 1'b1;
+	else begin
+	
+		if (player1Fire == 1'b1) begin
+			initialSpeed <= PLAYER_FIRE_SPEED;
+			initialX <= PlayerTLX;
+			initialY <=  PlayerTLY;
+			playerRockets <= 1'b1;
+		end
+		
+		else if (alienHit == 1'b1 || reachedBorder == 1'b1) begin
+			playerRockets <= 1'b0;
+		end
 	end
 end 
 

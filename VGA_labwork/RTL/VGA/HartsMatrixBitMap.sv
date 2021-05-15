@@ -10,10 +10,10 @@ module	HartsMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
-					input logic random_hart,
+					input logic alienHit,
 
-					output	logic	drawingRequest, //output that the pixel should be dispalyed 
-					output	logic	[7:0] RGBout  //rgb value from the bitmap 
+					output logic drawingRequest, //output that the pixel should be dispalyed 
+					output logic [7:0] RGBout  //rgb value from the bitmap 
  ) ;
  
 
@@ -23,16 +23,16 @@ localparam logic [7:0] TRANSPARENT_ENCODING = 8'hFF ;// RGB value in the bitmap 
 
 // data: [isAlive, type]
 //		level	 rows  cols	  data
-logic [0:0] [0:5] [0:13] [1:0]  aliens_data  = {{
-{2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11 },
-{2'b00, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10 },
-{2'b00, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10 },
-{2'b00, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10 },
-{2'b00, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10 },
-{2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10 }
+const logic [0:0] [0:5] [0:13] [1:0]  aliens_data_default  = {{
+{2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11, 2'b11, 2'b11, 2'b11, 2'b11 },
+{2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b11 },
+{2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b11 },
+{2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11 },
+{2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11 },
+{2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b10, 2'b11, 2'b10, 2'b10, 2'b10, 2'b11 }
 }};
  
-logic [0:1] [0:31] [0:31] [7:0]  aliens_colors  = {
+const logic [0:1] [0:31] [0:31] [7:0] aliens_colors_default  = {
 {{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hCD, 8'hAC, 8'hCD, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hC5, 8'hC1, 8'hC1, 8'hC5, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
 {8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hB0, 8'h78, 8'h3C, 8'h1C, 8'h55, 8'hCD, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hA9, 8'h62, 8'h87, 8'hC7, 8'hE7, 8'hE3, 8'hC2, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
 {8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hD1, 8'h9C, 8'h7C, 8'h3C, 8'h3C, 8'h1D, 8'h39, 8'hAD, 8'hFF, 8'hFF, 8'hFF, 8'hA9, 8'h26, 8'h47, 8'h87, 8'hC3, 8'hE7, 8'hE7, 8'hE7, 8'hC6, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
@@ -101,6 +101,8 @@ logic [0:1] [0:31] [0:31] [7:0]  aliens_colors  = {
 }};
  
 
+logic [0:0] [0:5] [0:13] [1:0]  aliens_data = aliens_data_default;
+logic [0:1] [0:31] [0:31] [7:0] aliens_colors = aliens_colors_default;
 // pipeline (ff) to get the pixel color from the array 	 
 
 //==----------------------------------------------------------------------------------------------------------------=
@@ -108,6 +110,8 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	if(!resetN) begin
 		RGBout <=	8'h00;
+		aliens_data <= aliens_data_default;
+		aliens_colors <= aliens_colors_default;
 	end
 	
 	else begin
@@ -117,6 +121,10 @@ always_ff@(posedge clk or negedge resetN) begin
 		
 			if (aliens_data[0][offsetY[10:5]][offsetX[10:5]][1] == 1'b1) begin // take bits 5,6,7,8,9,10 from address to select  position in the maze    
 				RGBout <= aliens_colors[aliens_data[0][offsetY[10:5]][offsetX[10:5]][0]][offsetY[4:0]][offsetX[4:0]];
+			end
+			
+			if (alienHit == 1'b1) begin
+				aliens_data[0][offsetY[10:5]][offsetX[10:5]][1] <= 1'b0;
 			end
 		end
 	end
