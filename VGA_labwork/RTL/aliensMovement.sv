@@ -17,9 +17,6 @@ module	aliensMovement	(
 					output logic signed [10:0]	topLeftY  // can be negative , if the object is partliy outside 
 );
 
-
-// a module used to generate the  ball trajectory.  
-
 const int INITIAL_X = 40;
 const int INITIAL_Y = 40;
 const int SPEED = 32;

@@ -22,7 +22,7 @@ agreement for further details.
 (header "symbol" (version "1.1"))
 (symbol
 	(rect 16 16 256 192)
-	(text "HartsMatrixBitMap" (rect 5 0 79 12)(font "Arial" ))
+	(text "AliensMatrix" (rect 5 0 54 12)(font "Arial" ))
 	(text "inst" (rect 8 160 20 172)(font "Arial" ))
 	(port
 		(pt 0 32)

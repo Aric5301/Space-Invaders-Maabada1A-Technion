@@ -83,15 +83,15 @@ agreement for further details.
 	(port
 		(pt 0 160)
 		(input)
-		(text "HartDrawingRequest" (rect 0 0 83 12)(font "Arial" ))
-		(text "HartDrawingRequest" (rect 21 155 104 167)(font "Arial" ))
+		(text "AliensDrawingRequest" (rect 0 0 90 12)(font "Arial" ))
+		(text "AliensDrawingRequest" (rect 21 155 111 167)(font "Arial" ))
 		(line (pt 0 160)(pt 16 160)(line_width 1))
 	)
 	(port
 		(pt 0 176)
 		(input)
-		(text "hartRGB[7..0]" (rect 0 0 56 12)(font "Arial" ))
-		(text "hartRGB[7..0]" (rect 21 171 77 183)(font "Arial" ))
+		(text "aliensRGB[7..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "aliensRGB[7..0]" (rect 21 171 83 183)(font "Arial" ))
 		(line (pt 0 176)(pt 16 176)(line_width 3))
 	)
 	(port
