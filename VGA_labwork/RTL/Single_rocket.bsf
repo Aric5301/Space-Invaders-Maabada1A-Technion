@@ -21,7 +21,7 @@ agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 264 208)
+	(rect 16 16 272 208)
 	(text "Single_rocket" (rect 5 0 85 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
 	(port
@@ -69,8 +69,8 @@ agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
-		(text "initialSpeed[8..0]" (rect 0 0 102 19)(font "Intel Clear" (font_size 8)))
-		(text "initialSpeed[8..0]" (rect 21 123 123 142)(font "Intel Clear" (font_size 8)))
+		(text "initialSpeed[10..0]" (rect 0 0 110 19)(font "Intel Clear" (font_size 8)))
+		(text "initialSpeed[10..0]" (rect 21 123 131 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
@@ -88,27 +88,27 @@ agreement for further details.
 		(line (pt 0 160)(pt 16 160)(line_width 3))
 	)
 	(port
-		(pt 248 32)
+		(pt 256 32)
 		(output)
 		(text "rocketDR" (rect 0 0 54 19)(font "Intel Clear" (font_size 8)))
-		(text "rocketDR" (rect 173 27 227 46)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 32)(pt 232 32))
+		(text "rocketDR" (rect 181 27 235 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 32)(pt 240 32))
 	)
 	(port
-		(pt 248 48)
+		(pt 256 48)
 		(output)
 		(text "rocketRGB[7..0]" (rect 0 0 93 19)(font "Intel Clear" (font_size 8)))
-		(text "rocketRGB[7..0]" (rect 134 43 227 62)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 48)(pt 232 48)(line_width 3))
+		(text "rocketRGB[7..0]" (rect 142 43 235 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 48)(pt 240 48)(line_width 3))
 	)
 	(port
-		(pt 248 64)
+		(pt 256 64)
 		(output)
 		(text "reachedBorder" (rect 0 0 87 19)(font "Intel Clear" (font_size 8)))
-		(text "reachedBorder" (rect 140 59 227 78)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 64)(pt 232 64))
+		(text "reachedBorder" (rect 148 59 235 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 64)(pt 240 64))
 	)
 	(drawing
-		(rectangle (rect 16 16 232 176))
+		(rectangle (rect 16 16 240 176))
 	)
 )

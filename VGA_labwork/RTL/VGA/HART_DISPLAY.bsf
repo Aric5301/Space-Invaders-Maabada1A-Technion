@@ -21,9 +21,9 @@ agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 272 176)
+	(rect 16 16 272 208)
 	(text "HART_DISPLAY" (rect 5 0 99 19)(font "Intel Clear" (font_size 8)))
-	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
+	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -69,9 +69,23 @@ agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
+		(text "colIdx[3..0]" (rect 0 0 64 19)(font "Intel Clear" (font_size 8)))
+		(text "colIdx[3..0]" (rect 21 123 85 142)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "rowIdx[2..0]" (rect 0 0 69 19)(font "Intel Clear" (font_size 8)))
+		(text "rowIdx[2..0]" (rect 21 139 90 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
 		(text "turbo" (rect 0 0 31 19)(font "Intel Clear" (font_size 8)))
-		(text "turbo" (rect 21 123 52 142)(font "Intel Clear" (font_size 8)))
-		(line (pt 0 128)(pt 16 128))
+		(text "turbo" (rect 21 155 52 174)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 160)(pt 16 160))
 	)
 	(port
 		(pt 256 32)
@@ -87,6 +101,27 @@ agreement for further details.
 		(text "hartRGB[7..0]" (rect 155 43 235 62)(font "Intel Clear" (font_size 8)))
 		(line (pt 256 48)(pt 240 48)(line_width 3))
 	)
+	(port
+		(pt 256 64)
+		(output)
+		(text "alien_data[1..0]" (rect 0 0 93 19)(font "Intel Clear" (font_size 8)))
+		(text "alien_data[1..0]" (rect 142 59 235 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 64)(pt 240 64)(line_width 3))
+	)
+	(port
+		(pt 256 80)
+		(output)
+		(text "aliensTLX[10..0]" (rect 0 0 96 19)(font "Intel Clear" (font_size 8)))
+		(text "aliensTLX[10..0]" (rect 139 75 235 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 80)(pt 240 80)(line_width 3))
+	)
+	(port
+		(pt 256 96)
+		(output)
+		(text "aliensTLY[10..0]" (rect 0 0 96 19)(font "Intel Clear" (font_size 8)))
+		(text "aliensTLY[10..0]" (rect 139 91 235 110)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 96)(pt 240 96)(line_width 3))
+	)
 	(parameter
 		"hart_topleftx"
 		"20"
@@ -98,7 +133,7 @@ agreement for further details.
 		""
 		(type "PARAMETER_UNSIGNED_HEX")	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 	(annotation_block (parameter)(rect 272 -64 372 16))
 )

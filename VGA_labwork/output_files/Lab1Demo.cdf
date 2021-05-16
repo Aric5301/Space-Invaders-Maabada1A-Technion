@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSXFC6D6F31) Path("C:/Users/aricr/Google Drive/Technion/Semester_4/Maabada/Git/Space-Invaders-Maabada1A-Technion/VGA_labwork/output_files/") File("Lab1Demo.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSXFC6D6F31) Path("D:/Google Drive/Technion/Semester_4/Maabada/Git/Space-Invaders-Maabada1A-Technion/VGA_labwork/output_files/") File("Lab1Demo.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

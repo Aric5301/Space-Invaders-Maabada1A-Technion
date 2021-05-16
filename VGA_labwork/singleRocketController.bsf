@@ -55,8 +55,8 @@ agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "initialSpeed[8..0]" (rect 0 0 61 12)(font "Arial" ))
-		(text "initialSpeed[8..0]" (rect 21 91 82 103)(font "Arial" ))
+		(text "initialSpeed[10..0]" (rect 0 0 64 12)(font "Arial" ))
+		(text "initialSpeed[10..0]" (rect 21 91 85 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port

@@ -18,6 +18,8 @@ module	objects_mux	(
 		  // add the box here 
 					input		logic	p_rocket1_DR, // two set of inputs per unit
 					input		logic	[7:0] p_rocket1_RGB, 
+					input		logic	a_rocket1_DR, // two set of inputs per unit
+					input		logic	[7:0] a_rocket1_RGB, 
 			  
 		  ////////////////////////
 		  // background 
@@ -40,6 +42,9 @@ always_ff@(posedge clk or negedge resetN) begin
 		 
 		else if (p_rocket1_DR == 1'b1)
 				RGBOut <= p_rocket1_RGB;
+				
+		else if (a_rocket1_DR == 1'b1)
+				RGBOut <= a_rocket1_RGB;
 		 
 		else if (HartDrawingRequest == 1'b1)
 				RGBOut <= hartRGB;

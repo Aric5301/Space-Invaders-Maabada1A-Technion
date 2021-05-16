@@ -12,7 +12,7 @@ module	singleRocketController	(
 					input	logic	resetN,
 					input	logic	startOfFrame,               // short pulse every start of frame 30Hz 
 					input	logic	isActive,                   // is the rocket currently active on screen 
-					input	logic signed [8:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
+					input	logic signed [10:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 					input logic signed [10:0] initialX,     // initial X coordinate of the rocket
 					input logic signed [10:0] initialY,     // initial Y coordinate of the rocket
 
@@ -98,6 +98,6 @@ end
 //get a better (64 times) resolution using integer   
 assign 	topLeftX = topLeftX_FixedPoint / FIXED_POINT_MULTIPLIER ;   // note it must be 2^n 
 assign 	topLeftY = topLeftY_FixedPoint / FIXED_POINT_MULTIPLIER ;    
-assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0);
+assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0) && isActive;
 
 endmodule

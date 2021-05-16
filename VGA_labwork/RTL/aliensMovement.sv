@@ -22,7 +22,7 @@ module	aliensMovement	(
 
 const int INITIAL_X = 40;
 const int INITIAL_Y = 40;
-const int SPEED = 64;
+const int SPEED = 32;
 const int RIGHT_BOUNDARY = (639-448-40);
 const int LEFT_BOUNDARY = 40;
 const int Y_GAP = 8;
@@ -120,7 +120,7 @@ end // always comb
 //////////--------------------------------------------------------------------------------------------------------------=
 
 //  Y axis calculations
-always_ff@(posedge clk or negedge resetN) begin
+always_ff @(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
 		topLeftY_FixedPoint	<= INITIAL_Y * FIXED_POINT_MULTIPLIER;
@@ -150,7 +150,7 @@ end
 //////////--------------------------------------------------------------------------------------------------------------=
 
 //  X axis calculations
-always_ff@(posedge clk or negedge resetN) begin
+always_ff @(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin
 		topLeftX_FixedPoint	<= INITIAL_X * FIXED_POINT_MULTIPLIER;
