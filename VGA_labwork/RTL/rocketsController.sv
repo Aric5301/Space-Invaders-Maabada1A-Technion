@@ -24,6 +24,7 @@ module	rocketsController	(
 					input logic signed [10:0] aliensTLX, //position on the screen 
 					input logic	signed [10:0] aliensTLY,  
 					input logic rocketsCollision,
+					input logic playerHitByRocket,
 					
 					output logic signed [10:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 					output logic signed [10:0] initialX,     // initial X coordinate of the rocket
@@ -74,6 +75,10 @@ always_ff@(posedge clk or negedge resetN) begin
 		
 		else if (rocketsCollision == 1'b1) begin
 			playerRockets <= 1'b0;
+			aliensRockets <= 1'b0;
+		end
+		
+		else if (playerHitByRocket == 1'b1) begin
 			aliensRockets <= 1'b0;
 		end
 		

@@ -123,6 +123,13 @@ agreement for further details.
 		(line (pt 0 240)(pt 16 240))
 	)
 	(port
+		(pt 0 256)
+		(input)
+		(text "playerHitByRocket" (rect 0 0 110 19)(font "Intel Clear" (font_size 8)))
+		(text "playerHitByRocket" (rect 21 251 131 270)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 256)(pt 16 256))
+	)
+	(port
 		(pt 304 32)
 		(output)
 		(text "p_rocket1_DR" (rect 0 0 84 19)(font "Intel Clear" (font_size 8)))
