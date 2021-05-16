@@ -23,8 +23,8 @@ module	objects_mux	(
 			  
 		  ////////////////////////
 		  // background 
-					input    logic HartDrawingRequest, // box of numbers
-					input		logic	[7:0] hartRGB,   
+					input    logic AliensDrawingRequest, // box of numbers
+					input		logic	[7:0] aliensRGB,   
 					input		logic	[7:0] backGroundRGB, 
 			  
 				   output	logic	[7:0] RGBOut
@@ -46,8 +46,8 @@ always_ff@(posedge clk or negedge resetN) begin
 		else if (a_rocket1_DR == 1'b1)
 				RGBOut <= a_rocket1_RGB;
 		 
-		else if (HartDrawingRequest == 1'b1)
-				RGBOut <= hartRGB;
+		else if (AliensDrawingRequest == 1'b1)
+				RGBOut <= aliensRGB;
 				
 		else 
 			RGBOut <= backGroundRGB; // last priority 
