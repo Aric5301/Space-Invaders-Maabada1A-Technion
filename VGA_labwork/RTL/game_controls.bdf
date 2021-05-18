@@ -56,7 +56,7 @@ agreement for further details.
 	(input)
 	(rect 200 264 400 280)
 	(text "INPUT" (rect 157 0 185 10)(font "Arial" (font_size 6)))
-	(text "two_risingEdgePulse" (rect 5 0 106 12)(font "Arial" ))
+	(text "two_risingEdgePulse" (rect 5 0 105 12)(font "Arial" ))
 	(pt 200 8)
 	(drawing
 		(line (pt 116 12)(pt 141 12))
@@ -67,6 +67,38 @@ agreement for further details.
 		(line (pt 141 12)(pt 145 8))
 	)
 	(text "VCC" (rect 160 7 180 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 216 104 384 120)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "clk" (rect 5 0 20 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 224 128 392 144)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "resetN" (rect 5 0 36 17)(font "Intel Clear" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -116,6 +148,48 @@ agreement for further details.
 		(line (pt 78 12)(pt 82 8))
 	)
 )
+(symbol
+	(rect 464 368 624 480)
+	(text "pulseCooldowner" (rect 5 0 87 12)(font "Arial" ))
+	(text "inst" (rect 8 96 25 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "resetN" (rect 0 0 33 12)(font "Arial" ))
+		(text "resetN" (rect 21 43 54 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "inPulse" (rect 0 0 35 12)(font "Arial" ))
+		(text "inPulse" (rect 21 59 56 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 160 32)
+		(output)
+		(text "outPulse" (rect 0 0 42 12)(font "Arial" ))
+		(text "outPulse" (rect 104 27 146 39)(font "Arial" ))
+		(line (pt 160 32)(pt 144 32))
+	)
+	(parameter
+		"COOLDOWN_CYCLES"
+		"5000000"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 144 96))
+	)
+	(annotation_block (parameter)(rect 624 328 872 368))
+)
 (connector
 	(pt 400 232)
 	(pt 864 232)
@@ -125,6 +199,42 @@ agreement for further details.
 	(pt 864 192)
 )
 (connector
-	(pt 400 272)
+	(text "clk" (rect 394 96 408 113)(font "Intel Clear" ))
+	(pt 384 112)
+	(pt 448 112)
+)
+(connector
+	(text "resetN" (rect 402 120 432 137)(font "Intel Clear" ))
+	(pt 392 136)
+	(pt 456 136)
+)
+(connector
+	(text "two_risingEdgePulseCD" (rect 754 256 867 273)(font "Intel Clear" ))
 	(pt 864 272)
+	(pt 744 272)
+)
+(connector
+	(text "two_risingEdgePulse" (rect 410 256 509 273)(font "Intel Clear" ))
+	(pt 400 272)
+	(pt 512 272)
+)
+(connector
+	(text "clk" (rect 362 384 376 401)(font "Intel Clear" ))
+	(pt 464 400)
+	(pt 352 400)
+)
+(connector
+	(text "resetN" (rect 362 400 392 417)(font "Intel Clear" ))
+	(pt 464 416)
+	(pt 352 416)
+)
+(connector
+	(text "two_risingEdgePulse" (rect 362 416 461 433)(font "Intel Clear" ))
+	(pt 464 432)
+	(pt 352 432)
+)
+(connector
+	(text "two_risingEdgePulseCD" (rect 624 384 737 401)(font "Intel Clear" ))
+	(pt 624 400)
+	(pt 704 400)
 )

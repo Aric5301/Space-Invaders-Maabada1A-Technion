@@ -12,9 +12,9 @@ module	rocketsController	(
 					input	logic	resetN,
 					input logic player1Fire,                 // short pulse every time the player fires
 					input	logic	startOfFrame,                // short pulse every start of frame 30Hz 
-					input logic alienHit,                   // collision if rocket hits an alien
+					input logic [1:0] alienHit,                   // collision if rocket hits an alien
 					input logic [2:0] a_reachedBorder,
-					input logic p_reachedBorder,
+					input logic [1:0] p_reachedBorder,
 					input logic signed [10:0] PlayerTLX,   // input the the current TLX of Player
 					input logic signed [10:0] PlayerTLY,   // input the the current TLY of Player
 					input logic [2:0] randSpeed,
@@ -24,13 +24,13 @@ module	rocketsController	(
 					input logic signed [10:0] aliensTLX, //position on the screen 
 					input logic	signed [10:0] aliensTLY,  
 					input logic [2:0] a_rocketsCollision,
-					input logic p_rocketsCollision,
+					input logic [1:0] p_rocketsCollision,
 					input logic [2:0] playerHitByRocket,
 					
 					output logic signed [10:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 					output logic signed [10:0] initialX,     // initial X coordinate of the rocket
 					output logic signed [10:0] initialY,     // initial Y coordinate of the rocket
-					output logic [0:0] isActivePlayers, 	  // output bus of isActive flags for all singleRocketControllers of players
+					output logic [1:0] isActivePlayers, 	  // output bus of isActive flags for all singleRocketControllers of players
 					output logic [2:0] isActiveAliens, 		  // output bus of isActive flags for all singleRocketControllers of aliens
 					output logic [3:0] colIdx,
 					output logic [2:0] rowIdx
@@ -40,7 +40,7 @@ module	rocketsController	(
 const int PLAYER_FIRE_SPEED = -128;
 const logic [0:3] [10:0] SPEEDS = {11'd32, 11'd64, 11'd128, 11'd256};
 
-logic [0:0] playerRockets;
+logic [1:0] playerRockets;
 logic [2:0] aliensRockets;
 
 logic alienShooting;
@@ -60,7 +60,7 @@ assign rowIdx = rowCounter;
 always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
-		playerRockets <= 1'b0;
+		playerRockets <= 2'b0;
 		aliensRockets <= 3'b0;
 		alienShooting <= 1'b0;
 		colCounter <= 4'b0; 
@@ -74,11 +74,18 @@ always_ff@(posedge clk or negedge resetN) begin
 			initialSpeed <= PLAYER_FIRE_SPEED;
 			initialX <= PlayerTLX + 32; // change when modifyng the spaceship size
 			initialY <=  PlayerTLY;
-			playerRockets <= 1'b1;
+			
+			if (playerRockets[0] == 1'b0) begin
+				playerRockets[0] <= 1'b1;
+			end
+			
+			else if (playerRockets[1] == 1'b0) begin
+				playerRockets[1] <= 1'b1;
+			end
 		end 
 		
 		else if (a_rocketsCollision != 3'b0) begin // if a_rocketsCollision changes then obviously p_rocketsCollision also does
-			playerRockets <= 1'b0;
+			playerRockets <= playerRockets ^ p_rocketsCollision;
 			aliensRockets <= aliensRockets ^ a_rocketsCollision;
 		end
 		
@@ -86,8 +93,12 @@ always_ff@(posedge clk or negedge resetN) begin
 			aliensRockets <= aliensRockets ^ playerHitByRocket;
 		end
 		
-		else if (alienHit == 1'b1 || (p_reachedBorder == 1'b1 && (reachedBorder_d == 1'b1))) begin
-			playerRockets <= 1'b0;
+		else if (p_reachedBorder != 2'b0 && (reachedBorder_d == 1'b1)) begin
+			playerRockets <= playerRockets ^ p_reachedBorder;
+		end
+		
+		else if (alienHit != 2'b0) begin
+			playerRockets <= playerRockets ^ alienHit;
 		end
 		
 		else if ((a_reachedBorder != 3'b0) && (reachedBorder_d == 1'b1)) begin
@@ -102,7 +113,7 @@ always_ff@(posedge clk or negedge resetN) begin
 		
 		else if (alienShooting == 1'b1) begin
 		
-			if (alien_data[1] == 1'b1) begin
+			if (alien_data != 2'b0) begin
 				initialSpeed <= SPEEDS[randSpeed];
 				initialX <= aliensTLX + (32 * colCounter) + 16;
 				initialY <=  aliensTLY + (32 * rowCounter) + 32;

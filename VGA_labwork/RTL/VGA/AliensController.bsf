@@ -62,9 +62,9 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "alienHit" (rect 0 0 46 19)(font "Intel Clear" (font_size 8)))
-		(text "alienHit" (rect 21 107 67 126)(font "Intel Clear" (font_size 8)))
-		(line (pt 0 112)(pt 16 112))
+		(text "alienHit[1..0]" (rect 0 0 76 19)(font "Intel Clear" (font_size 8)))
+		(text "alienHit[1..0]" (rect 21 107 97 126)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)

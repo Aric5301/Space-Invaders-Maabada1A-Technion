@@ -55,9 +55,9 @@ agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "alienHit" (rect 0 0 27 12)(font "Arial" ))
-		(text "alienHit" (rect 21 91 48 103)(font "Arial" ))
-		(line (pt 0 96)(pt 16 96)(line_width 1))
+		(text "alienHit[1..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "alienHit[1..0]" (rect 21 91 67 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
 		(pt 0 112)
@@ -69,9 +69,9 @@ agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
-		(text "p_reachedBorder" (rect 0 0 69 12)(font "Arial" ))
-		(text "p_reachedBorder" (rect 21 123 90 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 1))
+		(text "p_reachedBorder[1..0]" (rect 0 0 88 12)(font "Arial" ))
+		(text "p_reachedBorder[1..0]" (rect 21 123 109 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
 		(pt 0 144)
@@ -139,9 +139,9 @@ agreement for further details.
 	(port
 		(pt 0 288)
 		(input)
-		(text "p_rocketsCollision" (rect 0 0 70 12)(font "Arial" ))
-		(text "p_rocketsCollision" (rect 21 283 91 295)(font "Arial" ))
-		(line (pt 0 288)(pt 16 288)(line_width 1))
+		(text "p_rocketsCollision[1..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "p_rocketsCollision[1..0]" (rect 21 283 110 295)(font "Arial" ))
+		(line (pt 0 288)(pt 16 288)(line_width 3))
 	)
 	(port
 		(pt 0 304)
@@ -174,8 +174,8 @@ agreement for further details.
 	(port
 		(pt 280 80)
 		(output)
-		(text "isActivePlayers[0..0]" (rect 0 0 83 12)(font "Arial" ))
-		(text "isActivePlayers[0..0]" (rect 176 75 259 87)(font "Arial" ))
+		(text "isActivePlayers[1..0]" (rect 0 0 82 12)(font "Arial" ))
+		(text "isActivePlayers[1..0]" (rect 177 75 259 87)(font "Arial" ))
 		(line (pt 280 80)(pt 264 80)(line_width 3))
 	)
 	(port

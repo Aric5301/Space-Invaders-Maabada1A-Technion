@@ -27,7 +27,7 @@ always_ff @(posedge clk or negedge resetN) begin
 		else begin
 			counter <= counter+1;
 			if ( counter >= MAX_VAL ) // the +1 is done on the next clock 
-				counter <=  MIN_VAL ; // set min and max mvalues 
+				counter <=  MIN_VAL ; // set min and max values 
 			rise_d <= rise;
 			if (rise && !rise_d) // rising edge 
 				dout <= counter;

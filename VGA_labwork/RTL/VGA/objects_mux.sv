@@ -16,10 +16,9 @@ module	objects_mux	(
 					input		logic	[7:0] smileyRGB, 
 					     
 		  // rockets
-					input		logic	p_rockets_DR, // two set of inputs per unit
+					input		logic	[1:0] p_rockets_DR, // two set of inputs per unit
 					input		logic	[7:0] p_rocket0_RGB,
 					input		logic	[7:0] p_rocket1_RGB,
-					input		logic	[7:0] p_rocket2_RGB,
 					
 					input		logic	[2:0] a_rockets_DR, // two set of inputs per unit
 					input		logic	[7:0] a_rocket0_RGB,
@@ -46,8 +45,14 @@ always_ff@(posedge clk or negedge resetN) begin
 			RGBOut <= smileyRGB;
 		end
 		 
-		else if (p_rockets_DR != 1'b0) begin
-			RGBOut <= p_rocket0_RGB;
+		else if (p_rockets_DR != 2'b0) begin
+			if (p_rockets_DR[0] == 1'b1) begin
+				RGBOut <= p_rocket0_RGB;
+			end
+			
+			else if (p_rockets_DR[1] == 1'b1) begin
+				RGBOut <= p_rocket1_RGB;
+			end
 		end
 				
 		else if (a_rockets_DR != 3'b0) begin

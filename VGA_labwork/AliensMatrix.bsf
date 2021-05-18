@@ -62,9 +62,9 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "alienHit" (rect 0 0 27 12)(font "Arial" ))
-		(text "alienHit" (rect 21 107 48 119)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112)(line_width 1))
+		(text "alienHit[1..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "alienHit[1..0]" (rect 21 107 67 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)

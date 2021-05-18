@@ -10,16 +10,16 @@ module	game_controller	(
 			input	logic	startOfFrame,  // short pulse every start of frame 30Hz 
 			input	logic	drawing_request_player,
 			input	logic	drawing_request_borders,
-			input	logic	p_rockets_DR,
+			input	logic	[1:0] p_rockets_DR,
 			input	logic	[2:0] a_rockets_DR,
 			input	logic	drawing_request_aliens,
 			input logic signed [10:0] pixelX,// current VGA pixel 
 			input logic signed [10:0] pixelY,
 			
-			output logic alienHit, // active in case of collision between two objects
+			output logic [1:0] alienHit, // active in case of collision between two objects
 			output logic playerHitByAlienPulse,
 			output logic [2:0] playerHitByRocket,
-			output logic p_rocketsCollision,
+			output logic [1:0] p_rocketsCollision,
 			output logic [2:0] a_rocketsCollision,
 			output logic aliensReachedBorder
 );
@@ -34,14 +34,14 @@ assign playerHitByAlienPulse = (playerHitByAlien == 1'b1) && (playerHitByAlien_d
 
 assign aliensReachedBorder = drawing_request_aliens && (pixelY > 479);
 
-assign alienHit = ({1{drawing_request_aliens}} & p_rockets_DR);//  collision 
+assign alienHit = ({2{drawing_request_aliens}} & p_rockets_DR);//  collision 
 assign playerHitByRocket = ({3{drawing_request_player}} & a_rockets_DR);//  collision 
 
 always_comb begin
-	p_rocketsCollision = 1'b0;
+	p_rocketsCollision = 2'b0;
 	a_rocketsCollision = 3'b0;
 	
-	if ((a_rockets_DR != 3'b0) && (p_rockets_DR != 1'b0)) begin
+	if ((a_rockets_DR != 3'b0) && (p_rockets_DR != 2'b0)) begin
 		p_rocketsCollision = p_rockets_DR;
 		a_rocketsCollision = a_rockets_DR;
 	end

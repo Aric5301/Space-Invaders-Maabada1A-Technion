@@ -62,9 +62,9 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "p_rockets_DR" (rect 0 0 61 12)(font "Arial" ))
-		(text "p_rockets_DR" (rect 21 107 82 119)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112)(line_width 1))
+		(text "p_rockets_DR[1..0]" (rect 0 0 80 12)(font "Arial" ))
+		(text "p_rockets_DR[1..0]" (rect 21 107 101 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
@@ -97,9 +97,9 @@ agreement for further details.
 	(port
 		(pt 296 32)
 		(output)
-		(text "alienHit" (rect 0 0 27 12)(font "Arial" ))
-		(text "alienHit" (rect 248 27 275 39)(font "Arial" ))
-		(line (pt 296 32)(pt 280 32)(line_width 1))
+		(text "alienHit[1..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "alienHit[1..0]" (rect 229 27 275 39)(font "Arial" ))
+		(line (pt 296 32)(pt 280 32)(line_width 3))
 	)
 	(port
 		(pt 296 48)
@@ -118,9 +118,9 @@ agreement for further details.
 	(port
 		(pt 296 80)
 		(output)
-		(text "p_rocketsCollision" (rect 0 0 70 12)(font "Arial" ))
-		(text "p_rocketsCollision" (rect 205 75 275 87)(font "Arial" ))
-		(line (pt 296 80)(pt 280 80)(line_width 1))
+		(text "p_rocketsCollision[1..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "p_rocketsCollision[1..0]" (rect 186 75 275 87)(font "Arial" ))
+		(line (pt 296 80)(pt 280 80)(line_width 3))
 	)
 	(port
 		(pt 296 96)
