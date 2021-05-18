@@ -25,7 +25,7 @@ module	smileyface_moveCollision	(
 
 const int INITIAL_X = 280;
 const int INITIAL_Y = 400;
-const int X_SPEED = 128;
+const int X_SPEED = 192;
 const int RIGHT_BOUNDARY = (634-64);
 const int LEFT_BOUNDARY = 5;
 

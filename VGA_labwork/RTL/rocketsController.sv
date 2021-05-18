@@ -37,8 +37,8 @@ module	rocketsController	(
 					
 );
 
-const int PLAYER_FIRE_SPEED = -128;
-const logic [0:3] [10:0] SPEEDS = {11'd32, 11'd64, 11'd128, 11'd256};
+const int PLAYER_FIRE_SPEED = -192;
+const logic [0:3] [10:0] SPEEDS = {11'd64, 11'd128, 11'd192, 11'd256};
 
 logic [1:0] playerRockets;
 logic [2:0] aliensRockets;
