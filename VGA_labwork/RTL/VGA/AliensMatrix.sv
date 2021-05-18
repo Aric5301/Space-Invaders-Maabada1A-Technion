@@ -131,7 +131,7 @@ always_ff@(posedge clk or negedge resetN) begin
 				RGBout <= aliens_colors[aliens_data[offsetY[10:5]][offsetX[10:5]][0]][offsetY[4:0]][offsetX[4:0]];
 			end
 			
-			if (alienHit == 1'b1) begin
+			if (alienHit != 1'b0) begin
 				aliens_data[offsetY[10:5]][offsetX[10:5]][1] <= 1'b0;
 			end
 		end

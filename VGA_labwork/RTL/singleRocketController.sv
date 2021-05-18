@@ -1,11 +1,3 @@
-// (c) Technion IIT, Department of Electrical Engineering 2021 
-//-- Alex Grinshpun Apr 2017
-//-- Dudy Nov 13 2017
-// SystemVerilog version Alex Grinshpun May 2018
-// coding convention dudy December 2018
-// updaed Eyal Lev Feb 2021
-
-
 module	singleRocketController	(	
  
 					input	logic	clk,
@@ -98,6 +90,6 @@ end
 //get a better (64 times) resolution using integer   
 assign 	topLeftX = topLeftX_FixedPoint / FIXED_POINT_MULTIPLIER ;   // note it must be 2^n 
 assign 	topLeftY = topLeftY_FixedPoint / FIXED_POINT_MULTIPLIER ;    
-assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0) && isActive;
+assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0) && (isActive == 1'b1);
 
 endmodule

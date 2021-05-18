@@ -54,22 +54,6 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 80 544 248 560)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "collision" (rect 5 0 43 17)(font "Intel Clear" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
 	(rect 80 496 248 512)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "startOfFrame" (rect 5 0 68 17)(font "Intel Clear" ))
@@ -371,9 +355,9 @@ agreement for further details.
 	(annotation_block (parameter)(rect 952 520 1180 596))
 )
 (symbol
-	(rect 584 440 816 616)
+	(rect 584 440 816 584)
 	(text "smileyface_moveCollision" (rect 5 0 135 12)(font "Arial" ))
-	(text "inst" (rect 8 160 25 172)(font "Arial" ))
+	(text "inst" (rect 8 128 25 140)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -412,33 +396,26 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "collision" (rect 0 0 38 12)(font "Arial" ))
-		(text "collision" (rect 21 107 59 119)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112))
-	)
-	(port
-		(pt 0 128)
-		(input)
 		(text "HitEdgeCode[3..0]" (rect 0 0 90 12)(font "Arial" ))
-		(text "HitEdgeCode[3..0]" (rect 21 123 111 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 3))
+		(text "HitEdgeCode[3..0]" (rect 21 107 111 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 232 32)
 		(output)
 		(text "topLeftX[10..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "topLeftX[10..0]" (rect 150 27 223 39)(font "Arial" ))
+		(text "topLeftX[10..0]" (rect 150 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(port
 		(pt 232 48)
 		(output)
 		(text "topLeftY[10..0]" (rect 0 0 75 12)(font "Arial" ))
-		(text "topLeftY[10..0]" (rect 148 43 223 55)(font "Arial" ))
+		(text "topLeftY[10..0]" (rect 148 43 211 55)(font "Arial" ))
 		(line (pt 232 48)(pt 216 48)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 216 160))
+		(rectangle (rect 16 16 216 128))
 	)
 )
 (connector
@@ -462,16 +439,6 @@ agreement for further details.
 	(pt 840 456)
 	(pt 936 456)
 	(bus)
-)
-(connector
-	(pt 584 568)
-	(pt 560 568)
-	(bus)
-)
-(connector
-	(text "collision" (rect 368 536 406 553)(font "Intel Clear" ))
-	(pt 248 552)
-	(pt 584 552)
 )
 (connector
 	(text "resetN" (rect 368 472 401 484)(font "Arial" ))
@@ -532,11 +499,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 560 568)
-	(pt 560 632)
-	(bus)
-)
-(connector
 	(text "HitEdgeCode[3..0]" (rect 909 616 993 633)(font "Intel Clear" ))
 	(pt 560 632)
 	(pt 1576 632)
@@ -591,6 +553,16 @@ agreement for further details.
 	(text "PlayerTLX[10..0]" (rect 1688 456 1768 473)(font "Intel Clear" ))
 	(pt 1736 472)
 	(pt 1688 472)
+	(bus)
+)
+(connector
+	(pt 584 552)
+	(pt 560 552)
+	(bus)
+)
+(connector
+	(pt 560 632)
+	(pt 560 552)
 	(bus)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2021" (rect 168 24 527 43)(font "Intel Clear" (font_size 8)))

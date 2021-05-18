@@ -15,17 +15,22 @@ module	objects_mux	(
 					input		logic	smileyDrawingRequest, // two set of inputs per unit
 					input		logic	[7:0] smileyRGB, 
 					     
-		  // add the box here 
-					input		logic	p_rocket1_DR, // two set of inputs per unit
-					input		logic	[7:0] p_rocket1_RGB, 
-					input		logic	a_rocket1_DR, // two set of inputs per unit
-					input		logic	[7:0] a_rocket1_RGB, 
+		  // rockets
+					input		logic	p_rockets_DR, // two set of inputs per unit
+					input		logic	[7:0] p_rocket0_RGB,
+					input		logic	[7:0] p_rocket1_RGB,
+					input		logic	[7:0] p_rocket2_RGB,
+					
+					input		logic	[2:0] a_rockets_DR, // two set of inputs per unit
+					input		logic	[7:0] a_rocket0_RGB,
+					input		logic	[7:0] a_rocket1_RGB,
+					input		logic	[7:0] a_rocket2_RGB,
 			  
 		  ////////////////////////
 		  // background 
 					input    logic AliensDrawingRequest, // box of numbers
 					input		logic	[7:0] aliensRGB,   
-					input		logic	[7:0] backGroundRGB, 
+					input		logic	[7:0] backgroundRGB, 
 			  
 				   output	logic	[7:0] RGBOut
 );
@@ -37,20 +42,35 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	else begin
 	
-		if (smileyDrawingRequest == 1'b1 )   
-			RGBOut <= smileyRGB;  //first priority 
+		if (smileyDrawingRequest == 1'b1) begin   
+			RGBOut <= smileyRGB;
+		end
 		 
-		else if (p_rocket1_DR == 1'b1)
-				RGBOut <= p_rocket1_RGB;
+		else if (p_rockets_DR != 1'b0) begin
+			RGBOut <= p_rocket0_RGB;
+		end
 				
-		else if (a_rocket1_DR == 1'b1)
+		else if (a_rockets_DR != 3'b0) begin
+			if (a_rockets_DR[0] == 1'b1) begin
+				RGBOut <= a_rocket0_RGB;
+			end
+			
+			else if (a_rockets_DR[1] == 1'b1) begin
 				RGBOut <= a_rocket1_RGB;
+			end
+			
+			else if (a_rockets_DR[2] == 1'b1) begin
+				RGBOut <= a_rocket2_RGB;
+			end
+		end
 		 
-		else if (AliensDrawingRequest == 1'b1)
-				RGBOut <= aliensRGB;
-				
-		else 
-			RGBOut <= backGroundRGB; // last priority 
+		else if (AliensDrawingRequest == 1'b1) begin
+			RGBOut <= aliensRGB;
+		end
+		
+		else begin
+			RGBOut <= backgroundRGB;
+		end
 	end
 end
 

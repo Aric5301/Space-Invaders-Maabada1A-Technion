@@ -13,7 +13,6 @@ module	smileyface_moveCollision	(
 					input	logic	startOfFrame,  // short pulse every start of frame 30Hz 
 					input	logic	RightMove,  //change the direction in Y to up  
 					input	logic	LeftMove, 	//toggle the X direction 
-					input logic collision,  //collision if smiley hits an object
 					input	logic	[3:0] HitEdgeCode, //one bit per edge 
 
 					output	 logic signed 	[10:0]	topLeftX, // output the top left corner 
