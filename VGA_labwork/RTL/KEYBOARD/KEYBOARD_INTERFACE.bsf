@@ -83,8 +83,8 @@ agreement for further details.
 	(port
 		(pt 232 96)
 		(output)
-		(text "one_risingEdgePulse" (rect 0 0 121 19)(font "Intel Clear" (font_size 8)))
-		(text "one_risingEdgePulse" (rect 90 91 211 110)(font "Intel Clear" (font_size 8)))
+		(text "two_risingEdgePulse" (rect 0 0 121 19)(font "Intel Clear" (font_size 8)))
+		(text "two_risingEdgePulse" (rect 90 91 211 110)(font "Intel Clear" (font_size 8)))
 		(line (pt 232 96)(pt 216 96))
 	)
 	(drawing

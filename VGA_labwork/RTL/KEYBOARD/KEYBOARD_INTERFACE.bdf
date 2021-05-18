@@ -153,7 +153,7 @@ agreement for further details.
 	(output)
 	(rect 1376 880 1571 896)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "one_risingEdgePulse" (rect 90 0 189 17)(font "Intel Clear" ))
+	(text "two_risingEdgePulse" (rect 90 0 189 17)(font "Intel Clear" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -560,9 +560,9 @@ agreement for further details.
 	(annotation_block (parameter)(rect 1184 408 1353 446))
 )
 (symbol
-	(rect 936 840 1176 984)
+	(rect 936 872 1176 1016)
 	(text "keyToggle_decoder" (rect 5 0 100 12)(font "Arial" ))
-	(text "One_decoder" (rect 8 128 71 145)(font "Intel Clear" ))
+	(text "Two_decoder" (rect 8 128 71 145)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -621,13 +621,13 @@ agreement for further details.
 	)
 	(parameter
 		"KEY_VALUE"
-		"69"
+		"72"
 		""
 		(type "PARAMETER_UNSIGNED_HEX")	)
 	(drawing
 		(rectangle (rect 16 16 224 128))
 	)
-	(annotation_block (parameter)(rect 1176 800 1345 838))
+	(annotation_block (parameter)(rect 1176 832 1345 870))
 )
 (connector
 	(text "clk" (rect 262 224 276 241)(font "Intel Clear" ))
@@ -829,34 +829,42 @@ agreement for further details.
 	(pt 1376 512)
 )
 (connector
-	(text "clk" (rect 911 856 925 873)(font "Intel Clear" ))
-	(pt 888 872)
-	(pt 936 872)
-)
-(connector
-	(text "resetN" (rect 898 872 928 889)(font "Intel Clear" ))
-	(pt 888 888)
-	(pt 936 888)
-)
-(connector
-	(text "keyCode[8..0]" (rect 840 888 906 905)(font "Intel Clear" ))
-	(pt 824 904)
+	(text "clk" (rect 911 888 925 905)(font "Intel Clear" ))
+	(pt 888 904)
 	(pt 936 904)
-	(bus)
 )
 (connector
-	(text "make" (rect 874 904 901 921)(font "Intel Clear" ))
-	(pt 824 920)
+	(text "resetN" (rect 898 904 928 921)(font "Intel Clear" ))
+	(pt 888 920)
 	(pt 936 920)
 )
 (connector
-	(text "brake" (rect 875 920 902 937)(font "Intel Clear" ))
+	(text "keyCode[8..0]" (rect 840 920 906 937)(font "Intel Clear" ))
 	(pt 824 936)
 	(pt 936 936)
+	(bus)
 )
 (connector
-	(pt 1176 888)
+	(text "make" (rect 874 936 901 953)(font "Intel Clear" ))
+	(pt 824 952)
+	(pt 936 952)
+)
+(connector
+	(text "brake" (rect 875 952 902 969)(font "Intel Clear" ))
+	(pt 824 968)
+	(pt 936 968)
+)
+(connector
+	(pt 1184 888)
+	(pt 1184 920)
+)
+(connector
 	(pt 1376 888)
+	(pt 1184 888)
+)
+(connector
+	(pt 1184 920)
+	(pt 1176 920)
 )
 (text "KEY_ENTER = 9'h15A" (rect 944 232 1072 251)(font "Intel Clear" (font_size 8)))
 (text "KEY_BS = 9'h066" (rect 944 56 1049 75)(font "Intel Clear" (font_size 8)))
@@ -864,4 +872,4 @@ agreement for further details.
 (text "// (c) Technion IIT, Department of Electrical Engineering 2021\r\n// Written By Alex Grinshpun David Bar-On  Feb  2019  \r" (rect 112 -8 471 30)(font "Intel Clear" (font_size 8)))
 (text "KEY_DOT =8'h71" (rect 944 424 1047 443)(font "Intel Clear" (font_size 8)))
 (text "KEY_ZERO = 8'h70" (rect 944 608 1057 627)(font "Intel Clear" (font_size 8)))
-(text "KEY_ONE = 8'h69" (rect 944 816 1050 835)(font "Intel Clear" (font_size 8)))
+(text "KEY_TWO = 8'h72" (rect 944 816 1053 835)(font "Intel Clear" (font_size 8)))
