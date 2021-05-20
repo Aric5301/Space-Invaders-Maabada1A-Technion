@@ -73,8 +73,8 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 		if (player1Fire == 1'b1 && isGameMode == 1'b1) begin
 			initialSpeed <= PLAYER_FIRE_SPEED;
-			initialX <= PlayerTLX + 32; // change when modifyng the spaceship size
-			initialY <=  PlayerTLY;
+			initialX <= PlayerTLX + 16 - 4; // change when modifyng the spaceship size
+			initialY <=  PlayerTLY - 8;
 			
 			if (playerRockets[0] == 1'b0) begin
 				playerRockets[0] <= 1'b1;
@@ -116,8 +116,8 @@ always_ff@(posedge clk or negedge resetN) begin
 		
 			if (alien_data != 2'b0) begin
 				initialSpeed <= SPEEDS[randSpeed];
-				initialX <= aliensTLX + (32 * colCounter) + 16;
-				initialY <=  aliensTLY + (32 * rowCounter) + 32;
+				initialX <= aliensTLX + (32 * colCounter) + 16 - 4;
+				initialY <=  aliensTLY + (32 * rowCounter) + 32 - 8;
 				
 				if (aliensRockets[0] == 1'b0) begin
 					aliensRockets[0] <= 1'b1;
