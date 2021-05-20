@@ -12,6 +12,7 @@ module	aliensMovement	(
 					input	logic	resetN,
 					input	logic	startOfFrame,  // short pulse every start of frame 30Hz 
 					input logic turbo,
+					input logic isGameMode,
 
 					output logic signed [10:0]	topLeftX, // output the top left corner 
 					output logic signed [10:0]	topLeftY  // can be negative , if the object is partliy outside 
@@ -129,7 +130,7 @@ always_ff @(posedge clk or negedge resetN) begin
 			ySnapshot = topLeftY_FixedPoint;
 		end
 		
-		if (startOfFrame == 1'b1) begin
+		if (startOfFrame == 1'b1 && isGameMode == 1'b1) begin
 			case (pres_st)
 						
 				SdownToLeft: begin
@@ -153,7 +154,7 @@ always_ff @(posedge clk or negedge resetN) begin
 		topLeftX_FixedPoint	<= INITIAL_X * FIXED_POINT_MULTIPLIER;
 	end
 	
-	else if (startOfFrame == 1'b1) begin
+	else if (startOfFrame == 1'b1 && isGameMode == 1'b1) begin
 		case (pres_st)
 						
 			Sright: begin

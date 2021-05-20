@@ -13,7 +13,7 @@ module	smileyface_moveCollision	(
 					input	logic	startOfFrame,  // short pulse every start of frame 30Hz 
 					input	logic	RightMove,  //change the direction in Y to up  
 					input	logic	LeftMove, 	//toggle the X direction 
-					input	logic	[3:0] HitEdgeCode, //one bit per edge 
+					input logic isGameMode,
 
 					output	 logic signed 	[10:0]	topLeftX, // output the top left corner 
 					output	 logic signed	[10:0]	topLeftY  // can be negative , if the object is partliy outside 
@@ -63,7 +63,7 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	else begin
 	
-		if (startOfFrame == 1'b1) begin
+		if (startOfFrame == 1'b1 && isGameMode == 1'b1) begin
 			
 			if (RightMove == 1'b1 && LeftMove == 1'b0) begin
 			

@@ -26,6 +26,7 @@ module	rocketsController	(
 					input logic [2:0] a_rocketsCollision,
 					input logic [1:0] p_rocketsCollision,
 					input logic [2:0] playerHitByRocket,
+					input logic isGameMode,
 					
 					output logic signed [10:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 					output logic signed [10:0] initialX,     // initial X coordinate of the rocket
@@ -37,7 +38,7 @@ module	rocketsController	(
 					
 );
 
-const int PLAYER_FIRE_SPEED = -192;
+const int PLAYER_FIRE_SPEED = -255;
 const logic [0:3] [10:0] SPEEDS = {11'd64, 11'd128, 11'd192, 11'd256};
 
 logic [1:0] playerRockets;
@@ -70,7 +71,7 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	else begin
 	
-		if (player1Fire == 1'b1) begin
+		if (player1Fire == 1'b1 && isGameMode == 1'b1) begin
 			initialSpeed <= PLAYER_FIRE_SPEED;
 			initialX <= PlayerTLX + 32; // change when modifyng the spaceship size
 			initialY <=  PlayerTLY;

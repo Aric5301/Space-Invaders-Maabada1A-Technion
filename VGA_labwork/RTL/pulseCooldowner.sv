@@ -17,22 +17,22 @@ int counter;
 	
 always_ff @(posedge clk or negedge resetN) begin
 		
-		if (!resetN) begin
-			outPulse <= 1'b0;
-			counter <= COOLDOWN_CYCLES;
-		end
+	if (!resetN) begin
+		outPulse <= 1'b0;
+		counter <= COOLDOWN_CYCLES;
+	end
+	
+	else if (inPulse == 1'b1 && (counter >= COOLDOWN_CYCLES)) begin
+		counter <= 0;
+		outPulse <= 1'b1;
+	end
+	
+	else begin
+		outPulse <= 1'b0;
 		
-		else if (inPulse == 1'b1 && (counter >= COOLDOWN_CYCLES)) begin
-			counter <= 0;
-			outPulse <= 1'b1;
-		end
-		
-		else begin
-			outPulse <= 1'b0;
-			
-			if (counter < COOLDOWN_CYCLES) begin
-				counter <= counter + 1;
-			end
+		if (counter < COOLDOWN_CYCLES) begin
+			counter <= counter + 1;
 		end
 	end
+end
 endmodule

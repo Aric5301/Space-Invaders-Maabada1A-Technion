@@ -137,6 +137,13 @@ agreement for further details.
 		(line (pt 0 272)(pt 16 272)(line_width 3))
 	)
 	(port
+		(pt 0 288)
+		(input)
+		(text "isGameMode" (rect 0 0 77 19)(font "Intel Clear" (font_size 8)))
+		(text "isGameMode" (rect 21 283 98 302)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 288)(pt 16 288))
+	)
+	(port
 		(pt 320 32)
 		(output)
 		(text "colIdx[3..0]" (rect 0 0 64 19)(font "Intel Clear" (font_size 8)))
