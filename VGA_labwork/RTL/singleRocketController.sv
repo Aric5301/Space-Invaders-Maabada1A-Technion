@@ -10,7 +10,8 @@ module	singleRocketController	(
 
 					output logic signed [10:0]	topLeftX, // output the top left corner 
 					output logic signed [10:0]	topLeftY,  // can be negative , if the object is partliy outside 
-					output logic reachedBorder 
+					output logic reachedBorder,
+					output logic isFacingUp
 );
 
 logic isActive_d;
@@ -37,6 +38,7 @@ int initialY_Inside;     // initial Y coordinate of the rocket
 assign isActiveRisingEdgePulse = (isActive == 1'b1) && (isActive_d == 1'b0);
 assign initialX_Inside = initialX;
 assign initialY_Inside = initialY;
+assign isFacingUp = speed < 0;
 
 always_ff@(posedge clk or negedge resetN) begin
 	
