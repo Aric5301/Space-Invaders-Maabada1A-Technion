@@ -10,6 +10,7 @@ module loseDetector
 	input logic [2:0] playerHitByRocket,
 	input logic playerHitByAlienPulse,
 	input logic GodMode,
+	input logic PlayerHitBy_h_Rocket,
 
 
 	output logic lost,
@@ -19,6 +20,10 @@ module loseDetector
 logic playerHitByRocket_d;
 logic playerHitByRocketPulse;
 assign playerHitByRocketPulse = !playerHitByRocket_d && (playerHitByRocket != 3'b0);
+
+logic PlayerHitBy_h_Rocket_d;
+logic PlayerHitBy_h_RocketPulse;
+assign PlayerHitBy_h_RocketPulse = !PlayerHitBy_h_Rocket_d && (PlayerHitBy_h_Rocket == 1'b1);
   
 int healthCounter = 3;
 
@@ -30,15 +35,18 @@ always_ff @(posedge clk or negedge resetN) begin
 	if (!resetN) begin
 		healthCounter <= 3;
 		playerHitByRocket_d <= 1'b0;
+		PlayerHitBy_h_Rocket_d <= 1'b0;
 	end
 	
-	else if (playerHitByRocketPulse == 1'b1 && GodMode == 1'b0) begin
+	else if ((playerHitByRocketPulse == 1'b1 || PlayerHitBy_h_RocketPulse == 1'b1) && GodMode == 1'b0) begin
 		healthCounter <= healthCounter - 1;
 		playerHitByRocket_d <= (playerHitByRocket != 3'b0);
+		PlayerHitBy_h_Rocket_d <= PlayerHitBy_h_Rocket;
 	end
 	
 	else begin
 		playerHitByRocket_d <= (playerHitByRocket != 3'b0);
+		PlayerHitBy_h_Rocket_d <= PlayerHitBy_h_Rocket;
 	end
 end
 endmodule

@@ -14,6 +14,8 @@ module	smileyface_moveCollision	(
 					input	logic	RightMove,  //change the direction in Y to up  
 					input	logic	LeftMove, 	//toggle the X direction 
 					input logic isGameMode,
+					input logic UpMove,
+					input logic DownMove,
 
 					output	 logic signed 	[10:0]	topLeftX, // output the top left corner 
 					output	 logic signed	[10:0]	topLeftY  // can be negative , if the object is partliy outside 
@@ -24,7 +26,8 @@ module	smileyface_moveCollision	(
 // a module used to generate the  ball trajectory.  
 
 const int INITIAL_X = 280;
-const int INITIAL_Y = 400;
+const int UP_Y = 406;
+const int DOWN_Y = 438;
 const int X_SPEED = 192;
 const int RIGHT_BOUNDARY = (634-64);
 const int LEFT_BOUNDARY = 5;
@@ -48,8 +51,19 @@ int topLeftY_FixedPoint;
 always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
-		topLeftY_FixedPoint	<= INITIAL_Y * FIXED_POINT_MULTIPLIER;
+		topLeftY_FixedPoint	<= DOWN_Y * FIXED_POINT_MULTIPLIER;
 	end 
+	
+	else if (startOfFrame == 1'b1 && isGameMode == 1'b1) begin
+			
+		if (UpMove == 1'b1 && DownMove == 1'b0) begin
+			topLeftY_FixedPoint <= UP_Y * FIXED_POINT_MULTIPLIER;
+		end
+		
+		else if (UpMove == 1'b0 && DownMove == 1'b1) begin
+			topLeftY_FixedPoint <= DOWN_Y * FIXED_POINT_MULTIPLIER;
+		end
+	end
 end 
 
 //////////--------------------------------------------------------------------------------------------------------------=

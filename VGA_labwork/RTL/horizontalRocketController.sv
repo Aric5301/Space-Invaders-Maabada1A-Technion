@@ -12,18 +12,17 @@ module	horizontalRocketController	(
 	input logic reachedBorder,
 	input logic [2:0] randLoc,
 	input logic shootPulse,
-	input logic rocketsCollision,
 	input logic playerHitByRocket,
 	input logic isGameMode,
 	
 	output logic signed [10:0] initialSpeed,  // initial speed for the rocket. Used each time isActive rises. [(pixels/64) per frame]
 	output logic signed [10:0] initialX,     // initial X coordinate of the rocket
 	output logic signed [10:0] initialY,     // initial Y coordinate of the rocket
-	output logic isAciveHorizontal
+	output logic isActiveHorizontal
 );
 
 const int FIRE_SPEED = 128;
-const logic [0:3] [10:0] TLX_Locations = {11'd0, 11'd0, 11'd624, 11'd624};
+const logic [0:3] [10:0] TLX_Locations = {11'd0, 11'd0, 11'd620, 11'd620};
 const logic [0:3] [10:0] TLY_Locations = {11'd450, 11'd418, 11'd418, 11'd450};
 
 logic reachedBorder_d;
@@ -34,24 +33,21 @@ always_ff@(posedge clk or negedge resetN) begin
 	
 	if (!resetN) begin 
 		reachedBorder_d <= 1'b0;
+		isActiveHorizontal <= 1'b0;
 	end
 	
 	else begin
-	
-		if (rocketsCollision == 1'b1) begin // if a_rocketsCollision changes then obviously p_rocketsCollision also does
-			isAciveHorizontal <= 1'b0;
-		end
 		
-		else if (playerHitByRocket == 1'b1) begin
-			isAciveHorizontal <= 1'b0;
+		if (playerHitByRocket == 1'b1) begin
+			isActiveHorizontal <= 1'b0;
 		end
 		
 		else if (reachedBorder == 1'b1 && (reachedBorder_d == 1'b1)) begin
-			isAciveHorizontal <= 1'b0;
+			isActiveHorizontal <= 1'b0;
 		end
 		
-		else if (shootPulse == 1'b1) begin
-			isAciveHorizontal <= 1'b1;
+		else if (shootPulse == 1'b1 && isGameMode == 1'b1) begin
+			isActiveHorizontal <= 1'b1;
 		
 			initialX <= TLX_Locations[randLoc];
 			initialY <=  TLY_Locations[randLoc];

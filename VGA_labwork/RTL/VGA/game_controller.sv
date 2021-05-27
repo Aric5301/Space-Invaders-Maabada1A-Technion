@@ -14,13 +14,20 @@ module	game_controller	(
 			input	logic	drawing_request_aliens,
 			input logic signed [10:0] pixelX,// current VGA pixel 
 			input logic signed [10:0] pixelY,
+			input logic h_rocket_DR,
+			input logic Turbo_DR,
+			input logic GodMode_DR,
+
 			
 			output logic [1:0] alienHit, // active in case of collision between two objects
 			output logic playerHitByAlienPulse,
 			output logic [2:0] playerHitByRocket,
 			output logic [1:0] p_rocketsCollision,
 			output logic [2:0] a_rocketsCollision,
-			output logic aliensReachedBorder
+			output logic aliensReachedBorder,
+			output logic PlayerHitBy_h_Rocket,
+			output logic TurboCollision,
+			output logic GodModeCollision
 );
 
 // -----
@@ -29,12 +36,17 @@ logic playerHitByAlien_d;
 
 assign playerHitByAlien = (drawing_request_aliens && drawing_request_player);//  collision 
 assign playerHitByAlienPulse = (playerHitByAlien == 1'b1) && (playerHitByAlien_d == 1'b0);
+assign TurboCollision = (Turbo_DR == 1'b1 && (p_rockets_DR != 2'b0));
+assign GodModeCollision = (GodMode_DR == 1'b1 && (p_rockets_DR != 2'b0));
+
 // -----
 
 assign aliensReachedBorder = drawing_request_aliens && (pixelY > 479);
 
 assign alienHit = ({2{drawing_request_aliens}} & p_rockets_DR);//  collision 
 assign playerHitByRocket = ({3{drawing_request_player}} & a_rockets_DR);//  collision 
+
+assign PlayerHitBy_h_Rocket = h_rocket_DR && drawing_request_player;
 
 always_comb begin
 	p_rocketsCollision = 2'b0;

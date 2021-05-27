@@ -37,6 +37,15 @@ module	objects_mux	(
 					
 					input logic heartsDR,
 					input logic [7:0] heartsRGB,
+					
+					input logic h_rocket_DR,
+					input logic [7:0] h_rocket_RGB,
+					
+					input logic Turbo_DR,
+					input logic [7:0] TurboRGB,
+					
+					input logic GodMode_DR,
+					input logic [7:0] GodModeRGB,
 			  
 				   output	logic	[7:0] RGBOut
 );
@@ -91,10 +100,22 @@ always_ff@(posedge clk or negedge resetN) begin
 			else if (AliensDrawingRequest == 1'b1) begin
 				RGBOut <= aliensRGB;
 			end
+		
+			else if (h_rocket_DR == 1'b1) begin
+				RGBOut <= h_rocket_RGB;
+			end
+			
+			else if (Turbo_DR == 1'b1) begin
+				RGBOut <= TurboRGB;
+			end
+			
+			else if (GodMode_DR == 1'b1) begin
+				RGBOut <= GodModeRGB;
+			end
 			
 			else begin
 				RGBOut <= backgroundRGB;
-			end	
+			end
 		end
 
 		else begin

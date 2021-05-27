@@ -21,9 +21,9 @@ agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 248 208)
+	(rect 16 16 248 240)
 	(text "Smiley_Block" (rect 5 0 85 19)(font "Intel Clear" (font_size 8)))
-	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
+	(text "inst" (rect 8 203 24 220)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -88,6 +88,20 @@ agreement for further details.
 		(line (pt 0 160)(pt 16 160))
 	)
 	(port
+		(pt 0 176)
+		(input)
+		(text "UpMove" (rect 0 0 49 19)(font "Intel Clear" (font_size 8)))
+		(text "UpMove" (rect 21 171 70 190)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 176)(pt 16 176))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "DownMove" (rect 0 0 64 19)(font "Intel Clear" (font_size 8)))
+		(text "DownMove" (rect 21 187 85 206)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 192)(pt 16 192))
+	)
+	(port
 		(pt 232 32)
 		(output)
 		(text "smileyDR" (rect 0 0 56 19)(font "Intel Clear" (font_size 8)))
@@ -116,6 +130,6 @@ agreement for further details.
 		(line (pt 232 80)(pt 216 80)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 216 176))
+		(rectangle (rect 16 16 216 208))
 	)
 )

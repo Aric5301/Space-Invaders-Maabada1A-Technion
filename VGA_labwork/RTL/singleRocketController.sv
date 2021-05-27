@@ -92,6 +92,6 @@ end
 //get a better (64 times) resolution using integer   
 assign 	topLeftX = topLeftX_FixedPoint / FIXED_POINT_MULTIPLIER ;   // note it must be 2^n 
 assign 	topLeftY = topLeftY_FixedPoint / FIXED_POINT_MULTIPLIER ;    
-assign	reachedBorder = !(topLeftY < (479-10) && topLeftY > 0) && (isActive == 1'b1);
+assign	reachedBorder = !(topLeftY < (479-16) && topLeftY > 0) && (isActive == 1'b1);
 
-endmodule
+endmodule 

@@ -62,23 +62,16 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "rocketsCollision" (rect 0 0 60 12)(font "Arial" ))
-		(text "rocketsCollision" (rect 21 107 81 119)(font "Arial" ))
+		(text "playerHitByRocket" (rect 0 0 76 12)(font "Arial" ))
+		(text "playerHitByRocket" (rect 21 107 97 119)(font "Arial" ))
 		(line (pt 0 112)(pt 16 112)(line_width 1))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "playerHitByRocket" (rect 0 0 76 12)(font "Arial" ))
-		(text "playerHitByRocket" (rect 21 123 97 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 1))
-	)
-	(port
-		(pt 0 144)
-		(input)
 		(text "isGameMode" (rect 0 0 53 12)(font "Arial" ))
-		(text "isGameMode" (rect 21 139 74 151)(font "Arial" ))
-		(line (pt 0 144)(pt 16 144)(line_width 1))
+		(text "isGameMode" (rect 21 123 74 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 1))
 	)
 	(port
 		(pt 248 32)
@@ -104,8 +97,8 @@ agreement for further details.
 	(port
 		(pt 248 80)
 		(output)
-		(text "isAciveHorizontal" (rect 0 0 68 12)(font "Arial" ))
-		(text "isAciveHorizontal" (rect 159 75 227 87)(font "Arial" ))
+		(text "isActiveHorizontal" (rect 0 0 70 12)(font "Arial" ))
+		(text "isActiveHorizontal" (rect 157 75 227 87)(font "Arial" ))
 		(line (pt 248 80)(pt 232 80)(line_width 1))
 	)
 	(drawing
