@@ -34,6 +34,9 @@ module	objects_mux	(
 					input logic splashDR,
 					input logic [7:0] splashRGB,
 					input logic isGameMode,
+					
+					input logic heartsDR,
+					input logic [7:0] heartsRGB,
 			  
 				   output	logic	[7:0] RGBOut
 );
@@ -51,7 +54,11 @@ always_ff@(posedge clk or negedge resetN) begin
 		
 		else if (isGameMode == 1'b1) begin
 		
-			if (smileyDrawingRequest == 1'b1) begin   
+			if (heartsDR == 1'b1) begin
+				RGBOut <= heartsRGB;
+			end
+		
+			else if (smileyDrawingRequest == 1'b1) begin   
 				RGBOut <= smileyRGB;
 			end
 			 

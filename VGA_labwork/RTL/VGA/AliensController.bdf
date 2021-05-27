@@ -168,7 +168,7 @@ agreement for further details.
 	(input)
 	(rect 344 680 512 696)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "isGameMode" (rect 5 0 69 12)(font "Arial" ))
+	(text "isGameMode" (rect 5 0 68 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -355,7 +355,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 752 216 1007 292))
 )
 (symbol
-	(rect 1296 280 1536 456)
+	(rect 1296 296 1536 472)
 	(text "AliensMatrix" (rect 5 0 64 12)(font "Arial" ))
 	(text "inst" (rect 8 160 25 172)(font "Arial" ))
 	(port
@@ -418,21 +418,21 @@ agreement for further details.
 		(pt 240 32)
 		(output)
 		(text "drawingRequest" (rect 0 0 77 12)(font "Arial" ))
-		(text "drawingRequest" (rect 154 27 219 39)(font "Arial" ))
+		(text "drawingRequest" (rect 154 27 231 39)(font "Arial" ))
 		(line (pt 240 32)(pt 224 32))
 	)
 	(port
 		(pt 240 48)
 		(output)
 		(text "RGBout[7..0]" (rect 0 0 64 12)(font "Arial" ))
-		(text "RGBout[7..0]" (rect 165 43 219 55)(font "Arial" ))
+		(text "RGBout[7..0]" (rect 165 43 229 55)(font "Arial" ))
 		(line (pt 240 48)(pt 224 48)(line_width 3))
 	)
 	(port
 		(pt 240 64)
 		(output)
 		(text "alien_data_out[1..0]" (rect 0 0 96 12)(font "Arial" ))
-		(text "alien_data_out[1..0]" (rect 138 59 219 71)(font "Arial" ))
+		(text "alien_data_out[1..0]" (rect 138 59 234 71)(font "Arial" ))
 		(line (pt 240 64)(pt 224 64)(line_width 3))
 	)
 	(drawing
@@ -482,14 +482,14 @@ agreement for further details.
 		(pt 216 32)
 		(output)
 		(text "topLeftX[10..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "topLeftX[10..0]" (rect 134 27 195 39)(font "Arial" ))
+		(text "topLeftX[10..0]" (rect 134 27 207 39)(font "Arial" ))
 		(line (pt 216 32)(pt 200 32)(line_width 3))
 	)
 	(port
 		(pt 216 48)
 		(output)
 		(text "topLeftY[10..0]" (rect 0 0 75 12)(font "Arial" ))
-		(text "topLeftY[10..0]" (rect 132 43 195 55)(font "Arial" ))
+		(text "topLeftY[10..0]" (rect 132 43 207 55)(font "Arial" ))
 		(line (pt 216 48)(pt 200 48)(line_width 3))
 	)
 	(drawing
@@ -541,89 +541,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1648 344)
-	(pt 1640 344)
-	(bus)
-)
-(connector
-	(pt 1000 360)
-	(pt 1008 360)
-	(bus)
-)
-(connector
-	(pt 1632 360)
-	(pt 1624 360)
-	(bus)
-)
-(connector
-	(pt 1000 376)
-	(pt 1016 376)
-	(bus)
-)
-(connector
-	(pt 1000 392)
-	(pt 1024 392)
-)
-(connector
-	(text "resetN" (rect 1210 312 1240 329)(font "Intel Clear" ))
-	(pt 1208 328)
-	(pt 1296 328)
-)
-(connector
-	(text "clk" (rect 1226 296 1240 313)(font "Intel Clear" ))
-	(pt 1200 312)
-	(pt 1296 312)
-)
-(connector
-	(pt 1640 344)
-	(pt 1640 328)
-	(bus)
-)
-(connector
-	(pt 1008 360)
-	(pt 1008 344)
-	(bus)
-)
-(connector
-	(text "BoxHartTopLeftX[10..0]" (rect 992 328 1102 345)(font "Intel Clear" ))
-	(pt 1008 344)
-	(pt 1296 344)
-	(bus)
-)
-(connector
-	(pt 1624 360)
-	(pt 1624 344)
-	(bus)
-)
-(connector
-	(pt 1624 344)
-	(pt 1536 344)
-	(bus)
-)
-(connector
-	(pt 1016 376)
-	(pt 1016 360)
-	(bus)
-)
-(connector
-	(text "BoxHartTopLeftY[10..0]" (rect 984 344 1094 361)(font "Intel Clear" ))
-	(pt 1016 360)
-	(pt 1296 360)
-	(bus)
-)
-(connector
-	(text "rowIdx[2..0]" (rect 1242 408 1296 425)(font "Intel Clear" ))
-	(pt 1296 424)
-	(pt 1232 424)
-	(bus)
-)
-(connector
-	(text "colIdx[3..0]" (rect 1242 392 1292 409)(font "Intel Clear" ))
-	(pt 1296 408)
-	(pt 1232 408)
-	(bus)
-)
-(connector
 	(text "TLY[10..0]" (rect 738 424 786 441)(font "Intel Clear" ))
 	(pt 776 440)
 	(pt 728 440)
@@ -648,35 +565,9 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "aliens_DR" (rect 1530 296 1578 313)(font "Intel Clear" ))
-	(pt 1536 312)
-	(pt 1608 312)
-)
-(connector
-	(pt 1024 392)
-	(pt 1024 376)
-)
-(connector
-	(text "insideRectangle" (rect 1040 368 1115 385)(font "Intel Clear" ))
-	(pt 1296 376)
-	(pt 1024 376)
-)
-(connector
-	(text "aliensRGB[7..0]" (rect 1562 312 1635 329)(font "Intel Clear" ))
-	(pt 1640 328)
-	(pt 1536 328)
-	(bus)
-)
-(connector
 	(text "alienhHit[1..0]" (rect 1202 448 1268 465)(font "Intel Clear" ))
 	(pt 1192 464)
 	(pt 1256 464)
-	(bus)
-)
-(connector
-	(text "alienhHit[1..0]" (rect 1234 376 1300 393)(font "Intel Clear" ))
-	(pt 1296 392)
-	(pt 1224 392)
 	(bus)
 )
 (connector
@@ -720,5 +611,74 @@ agreement for further details.
 	(text "isGameMode" (rect 314 560 376 577)(font "Intel Clear" ))
 	(pt 304 576)
 	(pt 360 576)
+)
+(connector
+	(pt 1608 312)
+	(pt 1544 312)
+)
+(connector
+	(text "resetN" (rect 1210 328 1240 345)(font "Intel Clear" ))
+	(pt 1208 344)
+	(pt 1296 344)
+)
+(connector
+	(text "clk" (rect 1226 312 1240 329)(font "Intel Clear" ))
+	(pt 1200 328)
+	(pt 1296 328)
+)
+(connector
+	(text "rowIdx[2..0]" (rect 1242 424 1296 441)(font "Intel Clear" ))
+	(pt 1296 440)
+	(pt 1232 440)
+	(bus)
+)
+(connector
+	(text "colIdx[3..0]" (rect 1242 408 1292 425)(font "Intel Clear" ))
+	(pt 1296 424)
+	(pt 1232 424)
+	(bus)
+)
+(connector
+	(pt 1544 312)
+	(pt 1544 328)
+)
+(connector
+	(text "aliens_DR" (rect 1530 312 1578 329)(font "Intel Clear" ))
+	(pt 1544 328)
+	(pt 1536 328)
+)
+(connector
+	(text "alienhHit[1..0]" (rect 1234 392 1300 409)(font "Intel Clear" ))
+	(pt 1296 408)
+	(pt 1224 408)
+	(bus)
+)
+(connector
+	(text "BoxHartTopLeftX[10..0]" (rect 992 344 1102 361)(font "Intel Clear" ))
+	(pt 1000 360)
+	(pt 1296 360)
+	(bus)
+)
+(connector
+	(pt 1536 360)
+	(pt 1632 360)
+	(bus)
+)
+(connector
+	(text "BoxHartTopLeftY[10..0]" (rect 984 360 1094 377)(font "Intel Clear" ))
+	(pt 1000 376)
+	(pt 1296 376)
+	(bus)
+)
+(connector
+	(text "insideRectangle" (rect 1040 384 1115 401)(font "Intel Clear" ))
+	(pt 1000 392)
+	(pt 1296 392)
+)
+(connector
+	(text "aliensRGB[7..0]" (rect 1562 328 1635 345)(font "Intel Clear" ))
+	(pt 1536 344)
+	(pt 1648 344)
+	(bus)
 )
 (rectangle (rect 264 184 1824 720)(color 0 0 0)(line_width 3))

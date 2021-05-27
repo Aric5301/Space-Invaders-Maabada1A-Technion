@@ -11,7 +11,6 @@ module	rocketsController	(
 					input	logic	clk,
 					input	logic	resetN,
 					input logic player1Fire,                 // short pulse every time the player fires
-					input	logic	startOfFrame,                // short pulse every start of frame 30Hz 
 					input logic [1:0] alienHit,                   // collision if rocket hits an alien
 					input logic [2:0] a_reachedBorder,
 					input logic [1:0] p_reachedBorder,

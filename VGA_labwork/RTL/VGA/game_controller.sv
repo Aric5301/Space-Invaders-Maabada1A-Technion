@@ -9,7 +9,6 @@ module	game_controller	(
 			input	logic	resetN,
 			input	logic	startOfFrame,  // short pulse every start of frame 30Hz 
 			input	logic	drawing_request_player,
-			input	logic	drawing_request_borders,
 			input	logic	[1:0] p_rockets_DR,
 			input	logic	[2:0] a_rockets_DR,
 			input	logic	drawing_request_aliens,

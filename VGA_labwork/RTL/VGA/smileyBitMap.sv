@@ -10,10 +10,10 @@ module	smileyBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
+					input logic GodMode,
 
 					output	logic	drawingRequest, //output that the pixel should be dispalyed 
-					output	logic	[7:0] RGBout,  //rgb value from the bitmap 
-					output	logic	[3:0] HitEdgeCode //one bit per edge 
+					output	logic	[7:0] RGBout  //rgb value from the bitmap 
  ) ;
 
 // this is the divider used to access the right pixel 
@@ -32,51 +32,75 @@ localparam  int OBJECT_WIDTH_X_DIVIDER =  OBJECT_NUMBER_OF_X_BITS - 2;
 
 localparam logic [7:0] TRANSPARENT_ENCODING = 8'hFF ;// RGB value in the bitmap representing a transparent pixel 
 
-logic [0:OBJECT_HEIGHT_Y-1] [0:OBJECT_WIDTH_X-1] [7:0] object_colors = {
+logic [0:1][0:OBJECT_HEIGHT_Y-1] [0:OBJECT_WIDTH_X-1] [7:0] object_colors = {{
 	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h93,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h00,8'h01,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h00,8'h00,8'h49,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h01,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'h00,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h01,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'h00,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h00,8'h01,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h92,8'h01,8'h01,8'h01,8'h49,8'h49,8'h49,8'h09,8'h09,8'h01,8'h00,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h00,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h49,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h92,8'h01,8'h01,8'h01,8'h49,8'h49,8'h49,8'h09,8'h09,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
 	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h01,8'h01,8'h09,8'h09,8'h09,8'h09,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
 	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h49,8'h49,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
 	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h52,8'hFF,8'h4a,8'h13,8'h49,8'h49,8'h49,8'h49,8'h0a,8'h53,8'h13,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h52,8'hFF,8'h0a,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h9b,8'h01,8'h13,8'h49,8'h49,8'h49,8'h52,8'h53,8'h4a,8'h4a,8'h49,8'h0a,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h13,8'h00,8'h9b,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h53,8'h09,8'h01,8'h13,8'h4a,8'h49,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h09,8'h13,8'h09,8'h09,8'h09,8'h13,8'h00,8'h01,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h49,8'h01,8'h01,8'h13,8'h09,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h0a,8'h12,8'h09,8'h0a,8'h13,8'h00,8'h00,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'h53,8'hFF,8'h49,8'h01,8'h01,8'h01,8'h13,8'h0a,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h0a,8'h13,8'h00,8'h00,8'h00,8'h52,8'hFF,8'h13,8'hFF,8'hFF},
-	{8'hFF,8'h9b,8'h53,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h13,8'h4a,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h13,8'h00,8'h00,8'h00,8'h00,8'hFF,8'h13,8'hFF,8'hFF},
-	{8'hFF,8'h9b,8'h53,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h0a,8'h00,8'h00,8'h00,8'h00,8'h01,8'h13,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h49,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h09,8'h00,8'h00,8'h00,8'h00,8'h00,8'h09,8'hFF,8'hFF},
-	{8'hFF,8'h92,8'h00,8'h01,8'h01,8'h01,8'h01,8'h01,8'h0a,8'h53,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h0a,8'h13,8'h09,8'h13,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'hFF,8'hFF},
-	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h0a,8'h13,8'h09,8'h09,8'h13,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'hFF},
-	{8'h49,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h4a,8'h13,8'h52,8'h4a,8'h09,8'h0a,8'h13,8'h09,8'h09,8'h09,8'h13,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h09},
-	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h49,8'h49,8'h52,8'h53,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h09,8'h13,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h00,8'h01,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h9b,8'h01,8'h13,8'h49,8'h49,8'h49,8'h52,8'h53,8'h4a,8'h4a,8'h49,8'h0a,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h13,8'h01,8'h9b,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h53,8'h09,8'h01,8'h13,8'h4a,8'h49,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h09,8'h13,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h49,8'h01,8'h01,8'h13,8'h09,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h0a,8'h12,8'h09,8'h0a,8'h13,8'h01,8'h01,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'h53,8'hFF,8'h49,8'h01,8'h01,8'h01,8'h13,8'h0a,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h0a,8'h13,8'h01,8'h01,8'h01,8'h52,8'hFF,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'h9b,8'h53,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h13,8'h4a,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h13,8'h01,8'h01,8'h01,8'h01,8'hFF,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'h9b,8'h53,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h0a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h49,8'h13,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h49,8'h13,8'h09,8'h13,8'h09,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09,8'hFF,8'hFF},
+	{8'hFF,8'h92,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h0a,8'h53,8'h49,8'h53,8'h4a,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h49,8'h0a,8'h13,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF},
+	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h4a,8'h13,8'h4a,8'h4a,8'h4a,8'h49,8'h49,8'h0a,8'h13,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF},
+	{8'h49,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h4a,8'h13,8'h52,8'h4a,8'h09,8'h0a,8'h13,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09},
+	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h49,8'h49,8'h52,8'h53,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF},
 	{8'hFF,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h4a,8'h49,8'h49,8'h49,8'h4a,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h92,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'h09,8'hFF,8'hFF,8'hFF,8'h09,8'h9b,8'hFF,8'hFF,8'h9b,8'h09,8'h09,8'h09,8'h09,8'h01,8'h01,8'h01,8'h00,8'h9b,8'hFF,8'hFF,8'h01,8'h00,8'hFF,8'hFF,8'h92,8'h01,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'h89,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h09,8'h01,8'h00,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'h09,8'hFF,8'hFF,8'hFF,8'h09,8'h9b,8'hFF,8'hFF,8'h9b,8'h09,8'h09,8'h09,8'h09,8'h01,8'h01,8'h01,8'h01,8'h9b,8'hFF,8'hFF,8'h01,8'h01,8'hFF,8'hFF,8'h92,8'h01,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'h89,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h09,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF},
 	{8'hFF,8'hFF,8'hFF,8'hd0,8'hFF,8'hFF,8'hFF,8'hc8,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hd0,8'hFF,8'hFF,8'hFF,8'hc8,8'hFF,8'hFF,8'hFF},
 	{8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF},
-	{8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF}};
+	{8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF}}
+	,{{
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h93,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h49,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h92,8'h01,8'h01,8'h01,8'h49,8'h49,8'h49,8'h09,8'h09,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h01,8'h01,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h01,8'h01,8'h09,8'h09,8'h09,8'h09,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h49,8'h49,8'h49,8'h49,8'h49,8'h49,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h52,8'hFF,8'h4a,8'h13,8'h49,8'h49,8'h49,8'h49,8'h0a,8'h13,8'h13,8'h13,8'h13,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h52,8'hFF,8'h0a,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h13,8'h9b,8'h01,8'h13,8'h49,8'h49,8'h49,8'h52,8'h13,8'h18,8'h18,8'h18,8'h18,8'h13,8'h0a,8'h09,8'h09,8'h09,8'h13,8'h01,8'h9b,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h53,8'h09,8'h01,8'h13,8'h4a,8'h49,8'h49,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h13,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h49,8'h01,8'h01,8'h13,8'h09,8'h49,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h12,8'h09,8'h0a,8'h13,8'h01,8'h01,8'h09,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'h53,8'hFF,8'h49,8'h01,8'h01,8'h01,8'h13,8'h0a,8'h4a,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h0a,8'h13,8'h01,8'h01,8'h01,8'h52,8'hFF,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'h9b,8'h53,8'hFF,8'h01,8'h01,8'h01,8'h01,8'h13,8'h4a,8'h4a,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h13,8'h13,8'h01,8'h01,8'h01,8'h01,8'hFF,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'h9b,8'h53,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h4a,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h13,8'h0a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'h4a,8'h01,8'h01,8'h01,8'h01,8'h01,8'h53,8'h53,8'h49,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h13,8'h09,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09,8'hFF,8'hFF},
+	{8'hFF,8'h92,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h0a,8'h53,8'h49,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF,8'hFF},
+	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h4a,8'h13,8'h18,8'h18,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF},
+	{8'h49,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h4a,8'h13,8'h18,8'h18,8'h18,8'h18,8'h13,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h09},
+	{8'hFF,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h13,8'h49,8'h49,8'h49,8'h49,8'h13,8'h13,8'h13,8'h13,8'h09,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'hFF},
+	{8'hFF,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h4a,8'h49,8'h49,8'h49,8'h4a,8'h49,8'h09,8'h09,8'h09,8'h09,8'h09,8'h09,8'h13,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h01,8'h92,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'h09,8'hFF,8'hFF,8'hFF,8'h09,8'h9b,8'hFF,8'hFF,8'h9b,8'h09,8'h09,8'h09,8'h09,8'h01,8'h01,8'h01,8'h01,8'h9b,8'hFF,8'hFF,8'h01,8'h01,8'hFF,8'hFF,8'h92,8'h01,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'h89,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h09,8'h09,8'h01,8'h01,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF,8'h88,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hd0,8'hFF,8'hFF,8'hFF,8'hc8,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hd0,8'hFF,8'hFF,8'hFF,8'hc8,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF,8'hd1,8'hFF,8'hFF,8'hFF},
+	{8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hFF,8'hda,8'hFF,8'hFF,8'hFF}}}};
 
 
 //////////--------------------------------------------------------------------------------------------------------------=
-//hit bit map has one bit per edge:  hit_colors[3:0] =   {Left, Top, Right, Bottom}	
-//there is one bit per edge, in the corner two bits are set  
-
-
-logic [0:3] [0:3] [3:0] hit_colors = 
-		  {16'hC446,     
-			16'h8C62,    
-			16'h8932,
-			16'h9113};
 
  
 
@@ -87,18 +111,14 @@ always_ff@(posedge clk or negedge resetN)
 begin
 	if(!resetN) begin
 		RGBout <=	8'hFF;
-		HitEdgeCode <= 4'h0;
-
 	end
 
 	else begin
 		RGBout <= TRANSPARENT_ENCODING ; // default  
-		HitEdgeCode <= 4'h0;
 
 		if (InsideRectangle == 1'b1 ) 
 		begin // inside an external bracket 
-			HitEdgeCode <= hit_colors[offsetY >> OBJECT_HEIGHT_Y_DIVIDER][offsetX >> OBJECT_WIDTH_X_DIVIDER];	//get hitting edge from the colors table  
-			RGBout <= object_colors[offsetY][offsetX];
+			RGBout <= object_colors[GodMode][offsetY][offsetX];
 		end  	
 	end
 		
